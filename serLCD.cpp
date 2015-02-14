@@ -34,10 +34,10 @@ serLCD::serLCD(HardwareSerial& serial) : _serialobject(serial) {
 	_rowoffset = 0;
 }
 
- Initialize.. not used trying to implement all display sizes
-void serLCD::init(){
+// Initialize.. not used trying to implement all display sizes
+void serLCD::begin(){
 	delay(4);
-	_serialobject.begin(9600)
+	_serialobject.begin(9600);
 	// clear the display
 	clear();
 	// set brightness to full
@@ -173,8 +173,6 @@ void serLCD::specialCommand(uint8_t value){
 	delay(5);
 }
 
-inline void serLCD::write(uint8_t b){
+size_t serLCD::write(uint8_t b){
 	_serialobject.write(b);
 }
-
-inline

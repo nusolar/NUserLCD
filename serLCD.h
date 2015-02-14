@@ -66,6 +66,7 @@
 class serLCD : public Print {
 public:
 	serLCD (HardwareSerial& serial);
+	void begin();
 
 	void clear();
 	void clearLine(int);
@@ -93,7 +94,8 @@ public:
 	void createChar(int, uint8_t[]);
 	void printCustomChar(int);
 
-	virtual size_t write(uint8_t b) = 0;
+	virtual size_t write(uint8_t b);
+	using Print::write;
 
 private:
 	void command(uint8_t);
