@@ -28,7 +28,6 @@
 #include "WProgram.h"      // for delayMicroseconds
 #include "pins_arduino.h"  // for digitalPinToBitMask, etc
 #endif
-#include "SoftwareSerial.h"
 
 // Commands
 #define LCD_BACKLIGHT		0x80
@@ -64,9 +63,9 @@
 #define LCD_SET16CHAR		0x04
 #define LCD_SET20CHAR		0x03
 
-class serLCD : public SoftwareSerial {
+class serLCD : public Print {
 public:
-	serLCD (int pin);
+	serLCD (HardwareSerial& serial);
 
 	void clear();
 	void clearLine(int);
@@ -94,6 +93,8 @@ public:
 	void createChar(int, uint8_t[]);
 	void printCustomChar(int);
 
+	virtual size_t write(uint8_t b) = 0;
+
 private:
 	void command(uint8_t);
 	void specialCommand(uint8_t);
@@ -104,6 +105,7 @@ private:
 	uint8_t _numlines;
 	uint8_t _numchars;
 	uint8_t _rowoffset;
+	HardwareSerial& _serialobject;
 };
 
 #endif

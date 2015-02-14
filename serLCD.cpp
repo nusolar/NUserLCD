@@ -22,50 +22,28 @@
  always be found at http://arduiniana.org. -> NO LONGER NECESSARY. See V1.5 notes above
 */
 
-//#include <../NewSoftSerial/NewSoftSerial.h>
-
-#include <SoftwareSerial.h>
 #include "serLCD.h"
 
 //	PUBLIC FUNCTIONS
 
 // Contstructor
 // defaults to 16x2 display
-serLCD::serLCD(int pin) : SoftwareSerial(pin, pin){
-	pinMode(pin, OUTPUT);
-	begin(9600);
+serLCD::serLCD(HardwareSerial& serial) : _serialobject(serial) {
 	_numlines = LCD_2LINE;
 	_numchars = LCD_16CHAR;
 	_rowoffset = 0;
 }
 
-/* Initialize.. not used trying to implement all display sizes
-void serLCD::init(int pin, int rows, int cols){
-	pinMode(pin, OUTPUT);
+ Initialize.. not used trying to implement all display sizes
+void serLCD::init(){
 	delay(4);
-	begin(9600);
-	if(cols == LCD_20CHAR){
-		_numchars = LCD_20CHAR;
-		specialCommand(LCD_SET20CHAR);
-	}else{ // default to 16 char display
-		_numchars = LCD_16CHAR;
-		specialCommand(LCD_SET16CHAR);
-	}	
-	if(rows == LCD_4LINE){
-		_rowoffset = 1;
-		_numlines = LCD_4LINE;
-		specialCommand(LCD_SET4LINE);
-	}else{ // default to 2 line if input was invalid 
-		_rowoffset = 0;
-		_numlines = LCD_2LINE;
-		specialCommand(LCD_SET2LINE);
-	}
+	_serialobject.begin(9600)
 	// clear the display
 	clear();
 	// set brightness to full
 	setBrightness(30);
 }
-*/
+
 
 // Set brightness value range 1-30 1=OFF 30=FULL
 void serLCD::setBrightness(int val){
@@ -194,3 +172,9 @@ void serLCD::specialCommand(uint8_t value){
 	write(value);
 	delay(5);
 }
+
+inline void serLCD::write(uint8_t b){
+	_serialobject.write(b);
+}
+
+inline
