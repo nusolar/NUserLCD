@@ -176,3 +176,56 @@ void serLCD::specialCommand(uint8_t value){
 size_t serLCD::write(uint8_t b){
 	_serialobject.write(b);
 }
+
+// BUFFERED CLASS
+
+serLCD_buffered::serLCD_buffered(HardwareSerial& serial) : serLCD(serial) {}
+
+size_t serLCD_buffered::write(uint8_t b){
+	if (_bufpos < 32)
+	{
+		_buf[_bufpos++] = b;
+	}
+	else
+	{
+		_bufpos = _bufpos % 32;
+	}
+}
+
+void serLCD_buffered::home()
+{
+	_bufpos = 0;
+}
+
+void serLCD_buffered::clear()
+{
+	for (int i = 0; i < 32; i++)
+		_buf[i] = 0;
+}
+
+void serLCD_buffered::clearLine(int l)
+{
+	l = constrain(1,16,l);
+	for (int i = (l-1)*16; i < (l-1)*16+16; i++)
+		_buf[i] = 0;
+}
+
+void serLCD_buffered::setCursor(int x, int y)
+{
+	_bufpos = constrain(0,15,x-1) + constrain(0,1,y-1);
+}
+
+void serLCD_buffered::selectLine(int l)
+{
+	this->setCursor(1,l);
+}
+
+void serLCD_buffered::update()
+{
+	_serialobject.write(_buf);
+}
+
+String serLCD_buffered::getBuffer()
+{
+	return String(_buf);
+}

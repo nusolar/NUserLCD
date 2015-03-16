@@ -97,7 +97,7 @@ public:
 	virtual size_t write(uint8_t b);
 	using Print::write;
 
-private:
+protected:
 	void command(uint8_t);
 	void specialCommand(uint8_t);
 
@@ -108,6 +108,27 @@ private:
 	uint8_t _numchars;
 	uint8_t _rowoffset;
 	HardwareSerial& _serialobject;
+};
+
+class serLCD_buffered : public serLCD {
+public:
+	serLCD_buffered (HardwareSerial& serial);
+
+	void update();
+	void clear();
+	void clearLine(int);
+	void home();
+	void setCursor(int,int);
+	void selectLine(int);
+
+	String getBuffer();
+
+	virtual size_t write(uint8_t b);
+	using Print::write;
+
+protected:
+	char 		_buf[32];
+	uint8_t _bufpos = 0;
 };
 
 #endif
