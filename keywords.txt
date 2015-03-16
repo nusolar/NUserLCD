@@ -32,6 +32,8 @@ autoscroll	KEYWORD2
 noAutoscroll	KEYWORD2
 createChar	KEYWORD2
 printCustomChar	KEYWORD2
+getBuffer	KEYWORD2
+
 
 #######################################
 # Instances (KEYWORD2)

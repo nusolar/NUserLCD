@@ -200,19 +200,19 @@ void serLCD_buffered::home()
 void serLCD_buffered::clear()
 {
 	for (int i = 0; i < 32; i++)
-		_buf[i] = 0;
+		_buf[i] = ' ';
 }
 
 void serLCD_buffered::clearLine(int l)
 {
-	l = constrain(1,16,l);
+	l = constrain(l,1,16);
 	for (int i = (l-1)*16; i < (l-1)*16+16; i++)
-		_buf[i] = 0;
+		_buf[i] = ' ';
 }
 
 void serLCD_buffered::setCursor(int x, int y)
 {
-	_bufpos = constrain(0,15,x-1) + constrain(0,1,y-1);
+	_bufpos = constrain(x-1,0,15) + constrain(y-1,0,1)*16;
 }
 
 void serLCD_buffered::selectLine(int l)
