@@ -25,6 +25,8 @@ noCursor	KEYWORD2
 display	KEYWORD2
 noDisplay	KEYWORD2
 setCursor	KEYWORD2
+getCursor_x	KEYWORD2
+getCursor_y	KEYWORD2
 selectLine	KEYWORD2
 leftToRight	KEYWORD2
 rightToLeft	KEYWORD2
@@ -33,6 +35,7 @@ noAutoscroll	KEYWORD2
 createChar	KEYWORD2
 printCustomChar	KEYWORD2
 getBuffer	KEYWORD2
+update	KEYWORD2
 
 
 #######################################

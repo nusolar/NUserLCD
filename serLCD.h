@@ -119,6 +119,8 @@ public:
 	void clearLine(int);
 	void home();
 	void setCursor(int,int);
+	int  getCursor_x();
+	int  getCursor_y();
 	void selectLine(int);
 
 	String getBuffer();
@@ -127,7 +129,7 @@ public:
 	using Print::write;
 
 protected:
-	char 		_buf[32];
+	char 		_buf[32] {};
 	uint8_t _bufpos = 0;
 };
 

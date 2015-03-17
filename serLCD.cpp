@@ -149,27 +149,27 @@ void serLCD::createChar(int location, uint8_t charmap[]){
 	location &= 0x07;
   for (int i=0; i<8; i++){
     command(LCD_SETCGRAMADDR | (location << 3) | i);
-    write(charmap[i]);
+   serLCD::write(charmap[i]);
   }
 }
 
 // Prints custom character
 // Input values start with 1
 void serLCD::printCustomChar(int num){
-	write((num - 1));
+	serLCD::write((num - 1));
 }
 
 // PRIVATE FUNCTIONS
 
 // Functions for sending the special command values
 void serLCD::command(uint8_t value){
-	write(0xFE);
-	write(value);
+	serLCD::write(0xFE);
+	serLCD::write(value);
 	delay(5);
 }
 void serLCD::specialCommand(uint8_t value){
-	write(0x7C);
-	write(value);
+	serLCD::write(0x7C);
+	serLCD::write(value);
 	delay(5);
 }
 
@@ -179,17 +179,14 @@ size_t serLCD::write(uint8_t b){
 
 // BUFFERED CLASS
 
-serLCD_buffered::serLCD_buffered(HardwareSerial& serial) : serLCD(serial) {}
+serLCD_buffered::serLCD_buffered(HardwareSerial& serial) : serLCD(serial) { clear();}
 
 size_t serLCD_buffered::write(uint8_t b){
-	if (_bufpos < 32)
-	{
-		_buf[_bufpos++] = b;
-	}
-	else
-	{
+	_buf[_bufpos++] = b;
+
+	if (_bufpos >= 32)
 		_bufpos = _bufpos % 32;
-	}
+
 }
 
 void serLCD_buffered::home()
@@ -215,6 +212,9 @@ void serLCD_buffered::setCursor(int x, int y)
 	_bufpos = constrain(x-1,0,15) + constrain(y-1,0,1)*16;
 }
 
+int serLCD_buffered::getCursor_x() { return (_bufpos % 16) + 1; }
+int serLCD_buffered::getCursor_y() { return (_bufpos / 16) + 1; }
+
 void serLCD_buffered::selectLine(int l)
 {
 	this->setCursor(1,l);
@@ -222,6 +222,7 @@ void serLCD_buffered::selectLine(int l)
 
 void serLCD_buffered::update()
 {
+	serLCD::home();
 	_serialobject.write(_buf);
 }
 
