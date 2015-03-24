@@ -129,7 +129,7 @@ public:
 	using Print::write;
 
 protected:
-	char 		_buf[32] {};
+	char 		_buf[33] {};
 	uint8_t _bufpos = 0;
 };
 
