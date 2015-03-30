@@ -114,15 +114,32 @@ class serLCD_buffered : public serLCD {
 public:
 	serLCD_buffered (HardwareSerial& serial);
 
+	/* Update screen by pushing the entire buffer 
+	   out over serial, starting from position 1,1 */
 	void update();
+
+	/* Clear the entire buffer to ' ' */
 	void clear();
+
+	/* Clear the specified line (1 or 2) */
 	void clearLine(int);
+
+	/* Move the write position for the buffer to 1,1
+	   to change the cursor position on the screen, use
+	   serLCD::home(); */
 	void home();
+
+	/* Set the write position for the buffer */
 	void setCursor(int,int);
+
+	/* Get the current write position for the buffer */
 	int  getCursor_x();
 	int  getCursor_y();
+
+	/* Move the buffer write position to the beginning of the given line */
 	void selectLine(int);
 
+	/* Return a 32-char string containing the contents of the buffer */
 	String getBuffer();
 
 	virtual size_t write(uint8_t b);
