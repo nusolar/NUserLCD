@@ -8,15 +8,15 @@
  Version 1.4 - This version wrote specifically for 16x2
                Display.
                More display support coming in later version.
- 
- Version 1.5 - Since mid 2011 the Arduino IDE has implemented the NewSoftSerial 
-               library updates in the standard SoftwareSerial library and so 
-               using NewSoftSerial is no longer needed. serLCD has been updated 
+
+ Version 1.5 - Since mid 2011 the Arduino IDE has implemented the NewSoftSerial
+               library updates in the standard SoftwareSerial library and so
+               using NewSoftSerial is no longer needed. serLCD has been updated
                to use the Standard SoftwareSerial library. Also, Arduino 1.0
                support has been added. Backwards compatible with previous versions.
 
  Note -	This library requires NewSoftSerial library
-        The latest version of NewSoftSerial library can 
+        The latest version of NewSoftSerial library can
         always be found at http://arduiniana.org. -> NO LONGER NECESSARY. See 1.5 notes above.-Jordan Hochenbaum
 */
 #ifndef serLCD_h
@@ -114,7 +114,7 @@ class serLCD_buffered : public serLCD {
 public:
 	serLCD_buffered (HardwareSerial& serial);
 
-	/* Update screen by pushing the entire buffer 
+	/* Update screen by pushing the entire buffer
 	   out over serial, starting from position 1,1 */
 	void update();
 
@@ -146,8 +146,8 @@ public:
 	using Print::write;
 
 protected:
-	char 		_buf[33] {};
-	uint8_t _bufpos = 0;
+	char 		_buf[33];
+	uint8_t _bufpos;
 };
 
 #endif

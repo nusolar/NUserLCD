@@ -10,15 +10,15 @@
                Display.
                More display support coming in later version.
 
- Version 1.5 - Since mid 2011 the Arduino IDE has implemented the NewSoftSerial 
-                library updates in the standard SoftwareSerial library and so 
-                using NewSoftSerial is no longer needed. serLCD has been updated 
+ Version 1.5 - Since mid 2011 the Arduino IDE has implemented the NewSoftSerial
+                library updates in the standard SoftwareSerial library and so
+                using NewSoftSerial is no longer needed. serLCD has been updated
                 to use the Standard SoftwareSerial library. Also, Arduino 1.0
                 support has been added. Backwards compatible with previous versions.
 
- 
+
  Note -	This library requires NewSoftSerial library
- The latest version of NewSoftSerial library can 
+ The latest version of NewSoftSerial library can
  always be found at http://arduiniana.org. -> NO LONGER NECESSARY. See V1.5 notes above
 */
 
@@ -179,7 +179,7 @@ size_t serLCD::write(uint8_t b){
 
 // BUFFERED CLASS
 
-serLCD_buffered::serLCD_buffered(HardwareSerial& serial) : serLCD(serial) { clear();}
+serLCD_buffered::serLCD_buffered(HardwareSerial& serial) : serLCD(serial), _bufpos(0) { clear(); _buf[32] = 0; }
 
 size_t serLCD_buffered::write(uint8_t b){
 	_buf[_bufpos++] = b;
@@ -207,7 +207,7 @@ void serLCD_buffered::clearLine(int l)
 		_buf[i] = ' ';
 }
 
-void serLCD_buffered::setCursor(int x, int y)
+void serLCD_buffered::setCursor(int y, int x)
 {
 	_bufpos = constrain(x-1,0,15) + constrain(y-1,0,1)*16;
 }
@@ -217,7 +217,7 @@ int serLCD_buffered::getCursor_y() { return (_bufpos / 16) + 1; }
 
 void serLCD_buffered::selectLine(int l)
 {
-	this->setCursor(1,l);
+	this->setCursor(l,1);
 }
 
 void serLCD_buffered::update()
