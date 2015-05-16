@@ -5,6 +5,7 @@
 
  Created by Cody B. Null, September 9, 2011
  Modified by Jordan Hochenbaum, Dec 5, 2011. (Version 1.5)
+ Modified by NUsolar, 2015
 
  Version 1.4 - This version wrote specifically for 16x2
                Display.
